@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pizza">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>AngularJS</title>
+	<link rel="stylesheet" href="libs/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<script src="libs/angular/angular.min.js"></script>
+	<script src="libs/jquery/jquery-3.1.1.min.js"></script>
+	<script src="libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Pizza Online</h1>
+
+		<div class="col-sm-10">
+			
+			<form id="formulario" name="formulario" novalidate>
+
+				<label for="nombre">Nombre</label>
+				<input type="text" name="nombre" class="form-control" ng-model="orden.nombre" required />
+
+				<label for="email">Email</label>
+				<input type="email" name="email" class="form-control" ng-model="orden.email" />
+
+				<br>
+				<label for="cantidad">¿Cuantas Pizzas deseas? {{orden.cantidad}} </label>
+				<input type="range" name="cantidad" ng-model="orden.cantidad" min="1" max="10" step="1" />
+
+
+				<br>
+				<!-- tambien puedo usar $invalid para no negar con ! -->
+				<input ng-disabled="!formulario.$valid" class="btn" type="submit" value="Ordenar" />
+
+			</form>
+		</div>
+	</div>
+	
+	<script>
+		var miAppAngular = angular.module("pizza", []);
+	</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pizza">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>AngularJS</title>
+	<link rel="stylesheet" href="libs/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<script src="libs/angular/angular.min.js"></script>
+	<script src="libs/jquery/jquery-3.1.1.min.js"></script>
+	<script src="libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<div class="container" ng-controller="pizzaOnline">
+
+		<h1>Pizza Online</h1>
+
+		<div class="col-sm-10">
+			
+			<form id="formulario" name="formulario" ng-submit="ordenarPizza()" ng-hide="pizzaOk" novalidate>
+
+				<label for="nombre">Nombre</label>
+				<input type="text" name="nombre" class="form-control" ng-model="orden.nombre" required />
+
+				<!-- mostraremos este mensaje si el usuario da click al boton y el campo nombre esta vacio -->
+				<div ng-show="!orden.nombre && formulario.$submitted" class="alert alert-warning">Debes llenar este campo</div>
+
+
+				<label for="email">Email</label>
+				<input type="email" name="email" class="form-control" ng-model="orden.email" required/>
+
+				<!-- mostraremos este mensaje si el usuario da click al boton y el campo email esta vacio -->
+				<div ng-show="formulario.$submitted && !orden.email" class="alert alert-warning">Debes llenar este campo</div>
+
+
+				<br>
+				<label for="cantidad">¿Cuantas Pizzas deseas? {{orden.cantidad}} </label>
+				<input type="range" name="cantidad" ng-model="orden.cantidad" min="1" max="10" step="1" />
+
+				<!-- mostraremos este mensaje si el usuario selcciona rango menor que 3 -->
+				<div ng-show="orden.cantidad<3" class="alert alert-warning">Debes ordenar almenos 3 Pizzas</div>
+
+
+				<br>
+				<!-- tambien puedo usar $invalid para no negar con ! -->
+				<!-- <input ng-disabled="!formulario.$valid" class="btn" type="submit" value="Ordenar" /> -->
+				<input class="btn" type="submit" value="Ordenar" />
+
+			</form>
+
+			<!-- mostraremos este mensaje si el el formulario es validado correctamente -->
+			<div ng-show="pizzaOk" class="well">
+				<h3>¡ Sale una orden de pizza !</h3>
+				<h4>{{orden.cantidad}} pizzas para {{orden.nombre}} ({{orden.email}})</h4>
+				<button class="btn" ng-click="reloadPage()">Nuevo Pedido</button>
+			</div>
+	
+		</div>
+	</div>
+	
+	<script>
+		var miAppAngular = angular.module("pizza", []);
+			miAppAngular.controller('pizzaOnline', function($scope){
+				
+				$scope.orden = {cantidad: 5};
+
+				$scope.ordenarPizza = function () {
+					if($scope.formulario.$valid && $scope.orden.cantidad >= 3) {
+						$scope.pizzaOk = true;
+					}
+				}
+
+				$scope.reloadPage = function() {
+   					location.reload();
+   				}	
+			});
+
+	</script>
+</body>
+</html>
